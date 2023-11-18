@@ -34,3 +34,14 @@ services:
     network_mode: "host"
     depends_on:
       - redis
+
+  haproxy: 
+    image: haproxy:latest
+    container_name: haproxy 
+    restart: always 
+    volumes: 
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg 
+    command: bash -c "haproxy -f /usr/local/etc/haproxy/haproxy.cfg -d"
+    network_mode: "host"
+    depends_on: 
+      - redis
