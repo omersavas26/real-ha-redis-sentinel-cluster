@@ -22,3 +22,15 @@ services:
     network_mode: "host" 
     depends_on: 
       - redis 
+
+  nginx:
+    image: local-nginx-docker-python3
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/checkMaster.py:/etc/nginx/checkMaster.py
+    command: bash -c "nginx -c /etc/nginx/nginx.conf && python3 -u /etc/nginx/checkMaster.py" 
+    network_mode: "host"
+    depends_on:
+      - redis
